@@ -1,0 +1,5 @@
+# Archivo de configuración del Dockerfile
+
+# Evita que se agregen los archivos que no son código fuente
+.*
+Dockerfile
