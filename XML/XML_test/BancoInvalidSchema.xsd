@@ -1,6 +1,45 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+<xs:element name="banco">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="cuentas" type="cuentasType"/>
+			<xs:element name="clientes" type="clientesType"/>
+			<xs:element name="clientes_cuentas"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:key name="caja_ahorroKey">
+		<xs:selector xpath="banco/cuentas/caja_ahorros/caja_ahorro"/>
+		<xs:field xpath="@id"/>
+	</xs:key>
+	<xs:key name="cuenta_corrienteKey">
+		<xs:selector xpath="banco/cuentas/cuentas_corrientes/cuenta_corriente"/>
+		<xs:field xpath="@id"/>
+	</xs:key>
+	<xs:key name="clienteKey">
+		<xs:selector xpath="banco/clientes/cliente"/>
+		<xs:field xpath="@id"/>
+	</xs:key>
+	<xs:keyref name="caja_ahorroKeyref" refer="caja_ahorroKey">
+		<xs:selector xpath="banco/clientes_cuentas/cliente_cuenta"/>
+		<xs:field xpath="@cu_id"/>
+	</xs:keyref>
+	<xs:keyref name="cuenta_corrienteKeyref" refer="cuenta_corrienteKey">
+		<xs:selector xpath="banco/clientes_cuentas/cliente_cuenta"/>
+		<xs:field xpath="@cu_id"/>
+	</xs:keyref>
+	<xs:keyref name="clienteKeyref" refer="clienteKey">
+		<xs:selector xpath="banco/clientes_cuentas/cliente_cuenta"/>
+		<xs:field xpath="@c_id"/>
+	</xs:keyref>
+	<xs:unique name="c_cu_Key">
+		<xs:selector xpath="banco/clientes_cuentas/cliente_cuenta"/>
+		<xs:field xpath="@c_id"/>
+		<xs:field xpath="@cu_id"/>
+	</xs:unique>
+</xs:element>
+
 <xs:complexType name="cuentasType">
 	<xs:sequence>
 		<xs:element name="caja_ahorros">
@@ -71,5 +110,3 @@
 	<xs:attribute name="c_id" type="xs:IDREF"/>
 	<xs:attribute name="cu_id" type="xs:IDREF"/>
 </xs:complexType>
-
-</xs:schema>
