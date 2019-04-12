@@ -1,5 +1,5 @@
 """
-created by: Gabriel Torrandella
+@author: Gabriel Torrandella
 """
 
 import xml.etree.ElementTree as ET

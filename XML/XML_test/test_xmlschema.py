@@ -23,11 +23,11 @@ class TestXML(unittest.case.TestCase):
 
     def test_is_Valid_XML(self):
         XSFormacion = xmlschema.XMLSchema(self.path+"BancoSchema.xsd")
-        assert XSFormacion.is_valid(self.path+"Banco.xml")
+        self.assertTrue(XSFormacion.is_valid(self.path+"Banco.xml"))
 
     def test_is_Invalid_XML(self):
         XSFormacion = xmlschema.XMLSchema(self.path+"BancoSchema.xsd")
-        assert not XSFormacion.is_valid(self.path+"Banco_Invalido.xml")
+        self.assertFalse(XSFormacion.is_valid(self.path+"Banco_Invalido.xml"))
     
 
 if __name__ == "__main__":
