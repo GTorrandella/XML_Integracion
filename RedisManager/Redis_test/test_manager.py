@@ -5,9 +5,9 @@ Created on Apr 11, 2019
 '''
 import pytest
 import unittest
-from RedisManager.manager import Manager
-from RedisManager.cliente import Cliente
-from RedisManager.cuenta import Cuenta
+from XML_Integracion.RedisManager.manager import Manager
+from XML_Integracion.RedisManager.cliente import Cliente
+from XML_Integracion.RedisManager.cuenta import Cuenta
 
 class Test(unittest.TestCase):
     # Datos iniciales
