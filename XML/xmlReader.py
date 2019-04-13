@@ -14,7 +14,6 @@ documentTree = ET.parse("Banco.xml")
 root = documentTree.getroot()
 print(root.tag, root.attrib)
 
-
 for child in root:
     print(child.tag, child.attrib, child.text)
     for c2 in child:
@@ -24,9 +23,5 @@ for child in root:
             for c4 in c3:
                 print(c4.tag, c4.attrib, c4.text)
 
-for i in root.iter('caja_ahorro'):
-    print(i.tag, i.attrib)
-for i in root.iter('cuenta_corriente'):
-    print(i.tag, i.attrib)
 """
 print(sys.argv)
