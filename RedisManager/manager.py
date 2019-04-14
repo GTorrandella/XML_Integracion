@@ -42,10 +42,12 @@ class Manager():
         try:
             lista = []
             for idCuenta in self._db.smembers("cuentas"):
-                aux = {}
+                aux = {"id":idCuenta.decode()}
                 cuenta = self._db.hgetall("cuenta:"+ idCuenta.decode())
                 for dato in cuenta:
                     aux[dato.decode()] = cuenta[dato].decode()
+                idTitular = self._db.hget("cuenta-cliente", idCuenta.decode()).decode()
+                aux['t'] = self._db.hget("cliente:"+idTitular, "nombre").decode()
                 lista.append(aux)
             return lista
         except redis.exceptions.ConnectionError:

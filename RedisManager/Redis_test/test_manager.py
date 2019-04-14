@@ -110,9 +110,9 @@ class Test(unittest.TestCase):
     
     def test_listadoDeCuentas(self):
         cuentas = self.manager.listadoDeCuentas()
-        self.assertTrue({'tipo': 'ahorro', 'interes': '0.05', 'balance': '100000'} in cuentas)
-        self.assertTrue({'tipo': 'corriente', 'balance': '5000', 'interes': '0'} in cuentas)
-        self.assertTrue({'tipo': 'corriente', 'balance': '4000', 'interes': '0'} in cuentas)
+        self.assertTrue({'id':'a3','tipo': 'ahorro', 'interes': '0.05', 'balance': '100000', 't':'Sofia Romero'} in cuentas)
+        self.assertTrue({'id':'a1','tipo': 'corriente', 'balance': '5000', 'interes': '0', 't':'Pedro Romero'} in cuentas)
+        self.assertTrue({'id':'a2','tipo': 'corriente', 'balance': '4000', 'interes': '0', 't':'Sofia Romero'} in cuentas)
     
     def test_cuentasPorTitular(self):
         cuentasPedro = self.manager.cuentasPorTitular("Pedro Romero")
