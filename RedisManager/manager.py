@@ -16,40 +16,61 @@ class Manager():
         mapa = {"balance":cuenta.balance,
                 "tipo":cuenta.tipo,
                 "interes":cuenta.interes}
-        self._db.hmset("cuenta:"+cuenta.id, mapa)
-        self._db.sadd("cuentas", cuenta.id)
+        try:
+            self._db.hmset("cuenta:"+cuenta.id, mapa)
+            self._db.sadd("cuentas", cuenta.id)
+        except redis.exceptions.ConnectionError:
+            print("Base de datos offline. Revisar la conexión.")
     
     def guardarCliente(self, cliente):
         mapa = {"nombre":cliente.nombre,
                 "direccion":cliente.direccion}
-        self._db.hmset("cliente:"+cliente.id, mapa)
-        self._db.hset("clientes", cliente.nombre, cliente.id)
+        try:
+            self._db.hmset("cliente:"+cliente.id, mapa)
+            self._db.hset("clientes", cliente.nombre, cliente.id)
+        except redis.exceptions.ConnectionError:
+            print("Base de datos offline. Revisar la conexión.")        
         
     def guardarRelacion(self, cliente, cuenta):
-        self._db.hset("cuenta-cliente", cuenta.id, cliente.id)
-        self._db.sadd("cliente-cuenta:"+cliente.id, cuenta.id)
+        try:
+            self._db.hset("cuenta-cliente", cuenta.id, cliente.id)
+            self._db.sadd("cliente-cuenta:"+cliente.id, cuenta.id)
+        except redis.exceptions.ConnectionError:
+            print("Base de datos offline. Revisar la conexión.")
 
     def listadoDeCuentas(self):
-        lista = []
-        for idCuenta in self._db.smembers("cuentas"):
-            aux = {}
-            cuenta = self._db.hgetall("cuenta:"+ idCuenta.decode())
-            for dato in cuenta:
-                aux[dato.decode()] = cuenta[dato].decode()
-            lista.append(aux)
-        return lista
+        try:
+            lista = []
+            for idCuenta in self._db.smembers("cuentas"):
+                aux = {}
+                cuenta = self._db.hgetall("cuenta:"+ idCuenta.decode())
+                for dato in cuenta:
+                    aux[dato.decode()] = cuenta[dato].decode()
+                lista.append(aux)
+            return lista
+        except redis.exceptions.ConnectionError:
+            print("Base de datos offline. Revisar la conexión.")
+            return "ERROR"
     
     def cuentasPorTitular(self, titular):
-        lista = []
-        idCliente = self._db.hget("clientes", titular).decode()
-        for idCuenta in self._db.smembers("cliente-cuenta:"+idCliente):
-            aux = []
-            for dato in self._db.hmget("cuenta:"+ idCuenta.decode(), "balance", "tipo", "interes"):
-                aux.append(dato.decode())
-            lista.append(aux)
-        return lista
+        try:
+            lista = []
+            idCliente = self._db.hget("clientes", titular).decode()
+            for idCuenta in self._db.smembers("cliente-cuenta:"+idCliente):
+                aux = []
+                for dato in self._db.hmget("cuenta:"+ idCuenta.decode(), "balance", "tipo", "interes"):
+                    aux.append(dato.decode())
+                lista.append(aux)
+            return lista
+        except redis.exceptions.ConnectionError:
+            print("Base de datos offline. Revisar la conexión.")
+            return "ERROR"
     
     def balance(self, cuenta):
-        return self._db.hget("cuenta:"+cuenta, "balance").decode()
+        try:
+            return self._db.hget("cuenta:"+cuenta, "balance").decode()
+        except redis.exceptions.ConnectionError:
+            print("Base de datos offline. Revisar la conexión.")
+            return "ERROR"
         
         

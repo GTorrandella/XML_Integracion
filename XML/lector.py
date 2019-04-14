@@ -6,9 +6,16 @@ import xml.etree.ElementTree as ET
 import xmlschema
 from RedisManager.manager import Manager
 
-print(sys.argv)
-print(__name__)
+class Lector(object):
+    '''
+    classdocs
+    '''
 
+
+    def __init__(self):
+        '''
+        Constructor
+        '''
 """
 documentTree = ET.parse("Banco.xml")
 
