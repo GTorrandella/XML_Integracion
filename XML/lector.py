@@ -31,7 +31,6 @@ class Lector(object):
             self.xml = ET.parse(xml).getroot()
         
     def guardarXML(self):
-        print("Guardando")
         for child in self.xml:
             if child.tag == "cuentas":
                 self._guardarCuentas(child)

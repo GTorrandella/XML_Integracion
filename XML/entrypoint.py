@@ -29,14 +29,12 @@ class Menu(object):
         self.mostrarMenu()
         while not i.lower() in ["exit", "salir", "quit"]:
             i = input('-->')
-            print(i)
-            print(".xml" in i)
             if i == "balance":
-                BuscadorBalance().menu()
+                BuscadorBalance().buscar()
             elif i == "listar":
-                Enlistador()
+                Enlistador().enlistar()
             elif i == "titular":
-                BuscadorTitulares()
+                BuscadorTitulares().buscar()
             elif ".xml" in i:
                 Lector(i).guardarXML()
             elif i in ["help", "ayuda", "?"]:
