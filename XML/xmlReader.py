@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 import xmlschema
 from RedisManager.manager import Manager
 
+print(sys.argv)
 print(__name__)
 
 """
@@ -24,4 +25,3 @@ for child in root:
                 print(c4.tag, c4.attrib, c4.text)
 
 """
-print(sys.argv)

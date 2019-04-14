@@ -3,11 +3,11 @@ Created on Apr 11, 2019
 
 @author: gabo
 '''
-import pytest
 import unittest
-from XML_Integracion.RedisManager.manager import Manager
-from XML_Integracion.RedisManager.cliente import Cliente
-from XML_Integracion.RedisManager.cuenta import Cuenta
+from RedisManager.manager import Manager
+from RedisManager.cliente import Cliente
+from RedisManager.cuenta import Cuenta
+import XML.xmlReader
 
 class Test(unittest.TestCase):
     # Datos iniciales
