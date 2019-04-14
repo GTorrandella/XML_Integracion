@@ -7,7 +7,6 @@ import unittest
 from RedisManager.manager import Manager
 from RedisManager.cliente import Cliente
 from RedisManager.cuenta import Cuenta
-import XML.xmlReader
 
 class Test(unittest.TestCase):
     # Datos iniciales
