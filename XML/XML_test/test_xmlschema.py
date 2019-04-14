@@ -13,8 +13,8 @@ class TestXML(unittest.case.TestCase):
     
     def setUp(self):
         self.path = os.getcwd()+"/"
-        if '/XML/XML_test/' not in self.path:
-            self.path += '/XML/XML_test/'
+        if 'XML/XML_test/' not in self.path:
+            self.path += 'XML/XML_test/'
     
     def test_Invalid_Schema(self):
         with pytest.raises(ParseError) as excinfo:

@@ -1,9 +1,11 @@
 """
 @author: Gabriel Torrandella
 """
-import sys
 import xml.etree.ElementTree as ET
 import xmlschema
+
+from RedisManager.cliente import Cliente
+from RedisManager.cuenta import Cuenta
 from RedisManager.manager import Manager
 
 class Lector(object):
@@ -12,23 +14,55 @@ class Lector(object):
     '''
 
 
-    def __init__(self):
+    def __init__(self, xml, schema = ""):
         '''
         Constructor
         '''
-"""
-documentTree = ET.parse("Banco.xml")
-
-root = documentTree.getroot()
-print(root.tag, root.attrib)
-
-for child in root:
-    print(child.tag, child.attrib, child.text)
-    for c2 in child:
-        print(c2.tag, c2.attrib, c2.text)        
-        for c3 in c2:
-            print(c3.tag, c3.attrib, c3.text)        
-            for c4 in c3:
-                print(c4.tag, c4.attrib, c4.text)
-
-"""
+        self.manager = Manager()
+        if not schema == "":
+            try:
+                if xmlschema.XMLSchema(schema).is_valid(xml):
+                    self.xml = ET.parse(xml).getroot()
+                else:
+                    raise Exception()
+            except:
+                print("Bad Schema or XML")
+        else:
+            self.xml = ET.parse(xml).getroot()
+        
+    def guardarXML(self):
+        print("Guardando")
+        for child in self.xml:
+            if child.tag == "cuentas":
+                self._guardarCuentas(child)
+            elif child.tag == "clientes":
+                self._guardarClientes(child)
+            elif child.tag == "clientes_cuentas":
+                self._guardarRelaciones(child)
+            
+    def _guardarCuentas(self, cuentas):
+        for child in cuentas:
+            if child.tag == "caja_ahorros":
+                self._guardarCajaAhorro(child)
+            elif child.tag == "cuentas_corrientes":
+                self._guardarCuentaCorriente(child)
+            
+    def _guardarCajaAhorro(self, cajas):
+        for caja in cajas:
+            balance = caja[0].text
+            self.manager.guardarCuenta(Cuenta(caja.attrib['id'], "ahorro", balance, caja.attrib['interes']))
+    
+    def _guardarCuentaCorriente(self, cuenta):
+        for cuenta in cuenta:
+            balance = cuenta[0].text
+            self.manager.guardarCuenta(Cuenta(cuenta.attrib['id'], "corriente", balance))
+            
+    def _guardarClientes(self, clientes):
+        for cliente in clientes:
+            nom = cliente[0].text
+            direc = cliente[1].text
+            self.manager.guardarCliente(Cliente(cliente.attrib['id'], nom, direc))
+    
+    def _guardarRelaciones(self, relaciones):
+        for relacion in relaciones:
+            self.manager.guardarRelacion(relacion.attrib['c_id'], relacion.attrib['cu_id'])

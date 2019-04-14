@@ -3,7 +3,8 @@ Created on Apr 14, 2019
 
 @author: Gabriel Torrandella
 '''
-from RedisManager.manager import Manager
+import sys
+
 from XML.lector import Lector
 from XML.enlistadorCuentas import Enlistador
 from XML.buscadorTitulares import BuscadorTitulares
@@ -28,15 +29,22 @@ class Menu(object):
         self.mostrarMenu()
         while not i.lower() in ["exit", "salir", "quit"]:
             i = input('-->')
+            print(i)
+            print(".xml" in i)
             if i == "balance":
                 BuscadorBalance().menu()
             elif i == "listar":
                 Enlistador()
             elif i == "titular":
                 BuscadorTitulares()
+            elif ".xml" in i:
+                Lector(i).guardarXML()
             elif i in ["help", "ayuda", "?"]:
                 self.mostrarAyuda()
                 
 
 if __name__ == '__main__':
-    Menu().bucle()
+    if len(sys.argv) == 1:
+        Menu().bucle()
+    else:
+        print(sys.argv)

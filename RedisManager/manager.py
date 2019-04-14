@@ -31,10 +31,10 @@ class Manager():
         except redis.exceptions.ConnectionError:
             print("Base de datos offline. Revisar la conexión.")        
         
-    def guardarRelacion(self, cliente, cuenta):
+    def guardarRelacion(self, idCliente, idCuenta):
         try:
-            self._db.hset("cuenta-cliente", cuenta.id, cliente.id)
-            self._db.sadd("cliente-cuenta:"+cliente.id, cuenta.id)
+            self._db.hset("cuenta-cliente", idCuenta, idCliente)
+            self._db.sadd("cliente-cuenta:"+idCliente, idCuenta)
         except redis.exceptions.ConnectionError:
             print("Base de datos offline. Revisar la conexión.")
 

@@ -10,7 +10,7 @@ class Cuenta(object):
     '''
 
 
-    def __init__(self, id, tipo, balance, interes = 0):
+    def __init__(self, id, tipo, balance, interes = "N/A"):
         '''
         Constructor
         '''
