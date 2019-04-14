@@ -102,7 +102,7 @@ class Test(unittest.TestCase):
         
         cuentaNueva = Cuenta('a4', 'ahorro', '7000', '0.06')
         clienteNuevo = Cliente('c3', 'Francisco Romero', 'Erronea 789')
-        self.manager.guardarRelacion(Cliente.id, Cuenta.id)
+        self.manager.guardarRelacion(clienteNuevo.id, cuentaNueva.id)
         
         self.assertEqual(len(self.manager._db.hgetall('cuenta-cliente')), 4)
         self.assertEqual(self.manager._db.scard("cliente-cuenta:c3"), 1)
