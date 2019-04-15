@@ -28,7 +28,7 @@ class Menu(object):
         i = ""
         self.mostrarMenu()
         while not i.lower() in ["exit", "salir", "quit"]:
-            i = input('-->')
+            i = input(' --> ')
             if i == "balance":
                 BuscadorBalance().buscar()
             elif i == "listar":
