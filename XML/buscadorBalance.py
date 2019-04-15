@@ -17,7 +17,6 @@ class BuscadorBalance(object):
         print(" ---Ingrese id(s) de cuenta(s) a consultar---")
         i = input(" --> ")
         print("==================")
-        print("------------------")
         print(" ID |  Balance     ")
         for i in i.split():
             print("------------------")
