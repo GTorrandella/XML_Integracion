@@ -116,11 +116,11 @@ class Test(unittest.TestCase):
     
     def test_cuentasPorTitular(self):
         cuentasPedro = self.manager.cuentasPorTitular("Pedro Romero")
-        self.assertTrue(['5000', 'corriente', '0'] in cuentasPedro)
+        self.assertTrue(['a1', '5000', 'corriente', '0'] in cuentasPedro)
         
         cuentasSofia = self.manager.cuentasPorTitular("Sofia Romero")
-        self.assertTrue(['100000', 'ahorro', '0.05'] in cuentasSofia)
-        self.assertTrue(['4000', 'corriente', '0'] in cuentasSofia)
+        self.assertTrue(['a3', '100000', 'ahorro', '0.05'] in cuentasSofia)
+        self.assertTrue(['a2', '4000', 'corriente', '0'] in cuentasSofia)
     
     def test_balance(self):
         balanceUno = self.manager.balance('a1')
