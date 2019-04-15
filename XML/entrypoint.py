@@ -16,7 +16,17 @@ class Menu(object):
         pass
     
     def mostrarMenu(self):
-        pass
+        print("==============================")
+        print("          Bienvenido          ")
+        print("==============================")
+        print(" Comandos:")
+        print("  * [archivo].xml --> Guarda el xml en la BD.")
+        print("  * listar        --> Lista la información de todas las cuentas.")
+        print("  * titular       --> Muestra las cuentas vinculadas uno o varios titulares.")
+        print("  * balance       --> Consulta el balance de una o varias cuentas.")
+        print()
+        print("  * Para salir <-- salir/quit/exit *")
+        print()
     
     def mostrarAyuda(self):
         print(" # balance. Busca el balance de una cuenta")
@@ -39,6 +49,7 @@ class Menu(object):
                 Lector(i).guardarXML()
             elif i in ["help", "ayuda", "?"]:
                 self.mostrarAyuda()
+            print()
                 
 
 if __name__ == '__main__':
