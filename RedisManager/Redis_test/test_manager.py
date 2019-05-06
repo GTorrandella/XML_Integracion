@@ -6,7 +6,7 @@ Created on Apr 11, 2019
 import unittest
 from RedisManager.manager import Manager
 from RedisManager.cliente import Cliente
-from RedisManager.cuenta import Cuenta
+from RedisManager.cuenta import Cuenta, TipoCuenta
 
 class Test(unittest.TestCase):
     # Datos iniciales
@@ -24,17 +24,17 @@ class Test(unittest.TestCase):
     cuentaUno = {"id":"a1",
                  "datos":{
                      "balance":"5000",
-                     "tipo":"corriente",
+                     "tipo":TipoCuenta.Cuenta_Corriente,
                      "interes":"0"}}
     cuentaDos = {"id":"a2",
                  "datos":{
                      "balance":"4000",
-                     "tipo":"corriente",
+                     "tipo":TipoCuenta.Cuenta_Corriente,
                      "interes":"0"}}
     cuentaTres = {"id":"a3",
                   "datos":{
                      "balance":"100000",
-                     "tipo":"ahorro",
+                     "tipo":TipoCuenta.Caja_de_Ahorro,
                      "interes":"0.05"}}
 
     # c1 posee a1; c2 posse a2 y a4
@@ -74,12 +74,12 @@ class Test(unittest.TestCase):
         self.assertEqual(len(self.manager._db.smembers("cuentas")), 3)
         self.assertFalse(self.manager._db.hgetall("cuenta:a4"))
         
-        cuentaNueva = Cuenta('a4', 'ahorro', '7000', '0.06')
+        cuentaNueva = Cuenta('a4', TipoCuenta.Caja_de_Ahorro, '7000', '0.06')
         self.manager.guardarCuenta(cuentaNueva)
         
         self.assertEqual(len(self.manager._db.smembers("cuentas")), 4)
         cuentaNuevaDatos = self.manager._db.hgetall("cuenta:a4")
-        self.assertEqual(cuentaNuevaDatos['tipo'.encode()].decode(), 'ahorro')
+        self.assertEqual(cuentaNuevaDatos['tipo'.encode()].decode(), TipoCuenta.Caja_de_Ahorro)
         self.assertEqual(cuentaNuevaDatos['balance'.encode()].decode(), '7000')
         self.assertEqual(cuentaNuevaDatos['interes'.encode()].decode(), '0.06')
         
@@ -110,17 +110,17 @@ class Test(unittest.TestCase):
     
     def test_listadoDeCuentas(self):
         cuentas = self.manager.listadoDeCuentas()
-        self.assertTrue({'id':'a3','tipo': 'ahorro', 'interes': '0.05', 'balance': '100000', 't':'Sofia Romero'} in cuentas)
-        self.assertTrue({'id':'a1','tipo': 'corriente', 'balance': '5000', 'interes': '0', 't':'Pedro Romero'} in cuentas)
-        self.assertTrue({'id':'a2','tipo': 'corriente', 'balance': '4000', 'interes': '0', 't':'Sofia Romero'} in cuentas)
+        self.assertTrue({'id':'a3','tipo': TipoCuenta.Caja_de_Ahorro, 'interes': '0.05', 'balance': '100000', 't':'Sofia Romero'} in cuentas)
+        self.assertTrue({'id':'a1','tipo': TipoCuenta.Cuenta_Corriente, 'balance': '5000', 'interes': '0', 't':'Pedro Romero'} in cuentas)
+        self.assertTrue({'id':'a2','tipo': TipoCuenta.Cuenta_Corriente, 'balance': '4000', 'interes': '0', 't':'Sofia Romero'} in cuentas)
     
     def test_cuentasPorTitular(self):
         cuentasPedro = self.manager.cuentasPorTitular("Pedro Romero")
-        self.assertTrue(['a1', '5000', 'corriente', '0'] in cuentasPedro)
+        self.assertTrue(['a1', '5000', TipoCuenta.Cuenta_Corriente, '0'] in cuentasPedro)
         
         cuentasSofia = self.manager.cuentasPorTitular("Sofia Romero")
-        self.assertTrue(['a3', '100000', 'ahorro', '0.05'] in cuentasSofia)
-        self.assertTrue(['a2', '4000', 'corriente', '0'] in cuentasSofia)
+        self.assertTrue(['a3', '100000', TipoCuenta.Caja_de_Ahorro, '0.05'] in cuentasSofia)
+        self.assertTrue(['a2', '4000', TipoCuenta.Cuenta_Corriente, '0'] in cuentasSofia)
     
     def test_balance(self):
         balanceUno = self.manager.balance('a1')

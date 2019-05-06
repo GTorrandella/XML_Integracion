@@ -5,8 +5,9 @@ import xml.etree.ElementTree as ET
 import xmlschema
 
 from RedisManager.cliente import Cliente
-from RedisManager.cuenta import Cuenta
+from RedisManager.cuenta import Cuenta, TipoCuenta
 from RedisManager.manager import Manager
+
 
 class Lector(object):
     '''
@@ -49,12 +50,12 @@ class Lector(object):
     def _guardarCajaAhorro(self, cajas):
         for caja in cajas:
             balance = caja[0].text
-            self.manager.guardarCuenta(Cuenta(caja.attrib['id'], "ahorro", balance, caja.attrib['interes']))
+            self.manager.guardarCuenta(Cuenta(caja.attrib['id'], TipoCuenta.Caja_de_Ahorro, balance, caja.attrib['interes']))
     
     def _guardarCuentaCorriente(self, cuenta):
         for cuenta in cuenta:
             balance = cuenta[0].text
-            self.manager.guardarCuenta(Cuenta(cuenta.attrib['id'], "corriente", balance))
+            self.manager.guardarCuenta(Cuenta(cuenta.attrib['id'], TipoCuenta.Cuenta_Corriente, balance))
             
     def _guardarClientes(self, clientes):
         for cliente in clientes:

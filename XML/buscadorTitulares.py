@@ -4,6 +4,7 @@ Created on Apr 14, 2019
 @author: Gabriel Torrandella
 '''
 from RedisManager.manager import Manager
+from RedisManager.cuenta import TipoCuenta
 
 class BuscadorTitulares(object):
     '''
@@ -36,9 +37,9 @@ class BuscadorTitulares(object):
         return palabra
     
     def _defTipo(self, tipo):
-        if tipo == "corriente":
+        if tipo == TipoCuenta.Cuenta_Corriente:
             return self._agregarBlanco("Cte", 6)
-        elif tipo == "ahorro":
+        elif tipo == TipoCuenta.Caja_de_Ahorro:
             return self._agregarBlanco("Ahr", 6)
         
     def _imprimirCuentasPorTitular(self, titular):
