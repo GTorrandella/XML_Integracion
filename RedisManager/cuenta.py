@@ -20,6 +20,11 @@ class Cuenta(object):
         self.balance = balance
         self.interes = interes
         
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.id == other.id and self.tipo == other.tipo and self.balance == other.balance and self.interes == other.interes
+        return False
+        
 @unique
 class TipoCuenta(IntEnum):
     Caja_de_Ahorro = 1
