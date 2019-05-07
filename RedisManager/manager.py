@@ -41,7 +41,7 @@ class Manager():
             print("Base de datos offline. Revisar la conexión.")
 
     def _buscarCuenta(self, idCuenta):
-        tipo, balance, interes = self._db.hmget("cuenta:"+ idCuenta.decode(), "tipo", "balance", "interes")
+        tipo, balance, interes = self._db.hmget("cuenta:"+ idCuenta, "tipo", "balance", "interes")
         return Cuenta(idCuenta.decode(), TipoCuenta[tipo.decode()], balance.decode(), interes.decode()) 
 
     def listadoDeCuentas(self):
