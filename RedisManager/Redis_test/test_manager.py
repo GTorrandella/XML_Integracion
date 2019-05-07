@@ -24,17 +24,17 @@ class Test(unittest.TestCase):
     cuentaUno = {"id":"a1",
                  "datos":{
                      "balance":"5000",
-                     "tipo":TipoCuenta.Cuenta_Corriente,
+                     "tipo":TipoCuenta.Cuenta_Corriente.name,
                      "interes":"0"}}
     cuentaDos = {"id":"a2",
                  "datos":{
                      "balance":"4000",
-                     "tipo":TipoCuenta.Cuenta_Corriente,
+                     "tipo":TipoCuenta.Cuenta_Corriente.name,
                      "interes":"0"}}
     cuentaTres = {"id":"a3",
                   "datos":{
                      "balance":"100000",
-                     "tipo":TipoCuenta.Caja_de_Ahorro,
+                     "tipo":TipoCuenta.Caja_de_Ahorro.name,
                      "interes":"0.05"}}
 
     # c1 posee a1; c2 posse a2 y a4
