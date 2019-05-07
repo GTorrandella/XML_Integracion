@@ -15,13 +15,13 @@ class BuscadorBalance(object):
         
     def buscar(self):
         print(" ---Ingrese id(s) de cuenta(s) a consultar---")
-        i = input(" --> ")
+        userInput = input(" --> ")
         print("==================")
         print(" ID |  Balance     ")
-        for i in i.split():
+        for idCuenta in userInput.split():
             print("------------------")
-            bal = self.manager.balance(i)
-            print(self._agregarBlanco(i, 4)+"|"+self._agregarBlanco(bal, 14))
+            bal = self.manager.balance(idCuenta)
+            print(self._agregarBlanco(idCuenta, 4)+"|"+self._agregarBlanco(bal, 14))
         print("==================")
         
     def _agregarBlanco(self, palabra, longitud):

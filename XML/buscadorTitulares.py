@@ -19,15 +19,15 @@ class BuscadorTitulares(object):
         
     def buscar(self):
         print(" ---Ingrese el(los) nombre(s) a consultar, separados por ','---")
-        tits = input(" --> ")
-        if ", " in tits:
-            tits = tits.split(", ")
+        userInput = input(" --> ")
+        if ", " in userInput:
+            userInput = userInput.split(", ")
         else:
-            tits = tits.split(",")
+            userInput = userInput.split(",")
         print("=========================================================")
         print("       Titular       | ID | Balance | Tasa de Int | Tipo ")
-        for i in tits:
-            self._imprimirCuentasPorTitular(i)
+        for nombre in userInput:
+            self._imprimirCuentasPorTitular(nombre)
         print("=========================================================")
         
     def _agregarBlanco(self, palabra, longitud):
@@ -46,10 +46,10 @@ class BuscadorTitulares(object):
         print("---------------------------------------------------------")
         print(self._agregarBlanco(titular+":", 21))
         cuentas = self.manager.cuentasPorTitular(titular)
-        for c in cuentas:
+        for cuenta in cuentas:
             aux = self._agregarBlanco("", 21)
-            aux += "|"+self._agregarBlanco(c[0], 4)
-            aux += "|"+self._agregarBlanco(c[1], 9)
-            aux += "|"+self._agregarBlanco(c[3], 13)
-            aux += "|"+self._defTipo(c[2])
+            aux += "|"+self._agregarBlanco(cuenta.id, 4)
+            aux += "|"+self._agregarBlanco(cuenta.balance, 9)
+            aux += "|"+self._agregarBlanco(cuenta.interes, 13)
+            aux += "|"+self._defTipo(cuenta.tipo)
             print(aux)

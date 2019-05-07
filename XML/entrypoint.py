@@ -35,19 +35,19 @@ class Menu(object):
         print(" # exit, salir, quir. Salir del programa")
     
     def bucle(self):
-        i = ""
+        userInput = ""
         self.mostrarMenu()
-        while not i.lower() in ["exit", "salir", "quit"]:
-            i = input(' --> ')
-            if i == "balance":
+        while not userInput.lower() in ["exit", "salir", "quit"]:
+            userInput = input(' --> ')
+            if userInput == "balance":
                 BuscadorBalance().buscar()
-            elif i == "listar":
+            elif userInput == "listar":
                 Enlistador().enlistar()
-            elif i == "titular":
+            elif userInput == "titular":
                 BuscadorTitulares().buscar()
-            elif ".xml" in i:
-                Lector(i).guardarXML()
-            elif i in ["help", "ayuda", "?"]:
+            elif ".xml" in userInput:
+                Lector(userInput).guardarXML()
+            elif userInput in ["help", "ayuda", "?"]:
                 self.mostrarAyuda()
             print()
                 

@@ -79,7 +79,7 @@ class Test(unittest.TestCase):
         
         self.assertEqual(len(self.manager._db.smembers("cuentas")), 4)
         cuentaNuevaDatos = self.manager._db.hgetall("cuenta:a4")
-        self.assertEqual(cuentaNuevaDatos['tipo'.encode()].decode(), 'TipoCuenta.Caja_de_Ahorro')
+        self.assertEqual(TipoCuenta[cuentaNuevaDatos['tipo'.encode()].decode()], TipoCuenta.Caja_de_Ahorro)
         self.assertEqual(cuentaNuevaDatos['balance'.encode()].decode(), '7000')
         self.assertEqual(cuentaNuevaDatos['interes'.encode()].decode(), '0.06')
         
@@ -116,11 +116,11 @@ class Test(unittest.TestCase):
     
     def test_cuentasPorTitular(self):
         cuentasPedro = self.manager.cuentasPorTitular("Pedro Romero")
-        self.assertTrue(['a1', '5000', 'TipoCuenta.Cuenta_Corriente', '0'] in cuentasPedro)
+        self.assertTrue(Cuenta('a1', TipoCuenta.Cuenta_Corriente, '5000', '0') in cuentasPedro)
         
         cuentasSofia = self.manager.cuentasPorTitular("Sofia Romero")
-        self.assertTrue(['a3', '100000', 'TipoCuenta.Caja_de_Ahorro', '0.05'] in cuentasSofia)
-        self.assertTrue(['a2', '4000', 'TipoCuenta.Cuenta_Corriente', '0'] in cuentasSofia)
+        self.assertTrue(Cuenta('a3', TipoCuenta.Caja_de_Ahorro, '100000', '0.05') in cuentasSofia)
+        self.assertTrue(Ceunta('a2', TipoCuenta.Cuenta_Corriente, '4000', '0') in cuentasSofia)
     
     def test_balance(self):
         balanceUno = self.manager.balance('a1')

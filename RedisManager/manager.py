@@ -3,6 +3,8 @@
 """
 
 import redis
+from RedisManager.cliente import Cliente
+from RedisManager.cuenta import Cuenta, TipoCuenta
 
 class Manager():
     
@@ -60,9 +62,8 @@ class Manager():
             idCliente = self._db.hget("clientes", titular)
             if not idCliente == None:
                 for idCuenta in self._db.smembers("cliente-cuenta:"+idCliente.decode()):
-                    aux = [idCuenta.decode()]
-                    for dato in self._db.hmget("cuenta:"+ idCuenta.decode(), "balance", "tipo", "interes"):
-                        aux.append(dato.decode())
+                    tipo, balance, interes = self._db.hmget("cuenta:"+ idCuenta.decode(), "tipo", "balance", "interes")
+                    aux = Cuenta(idCuenta.decode(), TipoCuenta[tipo.decode()], balance.decode(), interes.decode())
                     lista.append(aux)
             return lista
         except redis.exceptions.ConnectionError:
