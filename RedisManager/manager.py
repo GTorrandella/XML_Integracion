@@ -42,7 +42,7 @@ class Manager():
 
     def _buscarCuenta(self, idCuenta):
         tipo, balance, interes = self._db.hmget("cuenta:"+ idCuenta, "tipo", "balance", "interes")
-        return Cuenta(idCuenta.decode(), TipoCuenta[tipo.decode()], balance.decode(), interes.decode()) 
+        return Cuenta(idCuenta, TipoCuenta[tipo.decode()], balance.decode(), interes.decode()) 
 
     def listadoDeCuentas(self):
         try:
