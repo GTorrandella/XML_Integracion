@@ -49,7 +49,7 @@ class Enlistador(object):
         nombre = cuenta['t'].split()
         bal = self._agregarBlanco(cuenta['balance'], 9)
         tint = self._agregarBlanco(cuenta['interes'], 13)
-        t = self._defTipo(cuenta['tipo'])
+        t = self._defTipo(TipoCuenta(cuenta['tipo']))
         
         print(' '+idc+'|'+self._agregarBlanco(nombre[0], 9)+'|'+bal+'|'+tint+'|'+t)
         

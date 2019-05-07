@@ -110,9 +110,9 @@ class Test(unittest.TestCase):
     
     def test_listadoDeCuentas(self):
         cuentas = self.manager.listadoDeCuentas()
-        self.assertTrue({'id':'a3','tipo': 'TipoCuenta.Caja_de_Ahorro', 'interes': '0.05', 'balance': '100000', 't':'Sofia Romero'} in cuentas)
-        self.assertTrue({'id':'a1','tipo': 'TipoCuenta.Cuenta_Corriente', 'balance': '5000', 'interes': '0', 't':'Pedro Romero'} in cuentas)
-        self.assertTrue({'id':'a2','tipo': 'TipoCuenta.Cuenta_Corriente', 'balance': '4000', 'interes': '0', 't':'Sofia Romero'} in cuentas)
+        self.assertTrue({'id':'a3','tipo': 'Caja_de_Ahorro', 'interes': '0.05', 'balance': '100000', 't':'Sofia Romero'} in cuentas)
+        self.assertTrue({'id':'a1','tipo': 'Cuenta_Corriente', 'balance': '5000', 'interes': '0', 't':'Pedro Romero'} in cuentas)
+        self.assertTrue({'id':'a2','tipo': 'Cuenta_Corriente', 'balance': '4000', 'interes': '0', 't':'Sofia Romero'} in cuentas)
     
     def test_cuentasPorTitular(self):
         cuentasPedro = self.manager.cuentasPorTitular("Pedro Romero")
@@ -120,7 +120,7 @@ class Test(unittest.TestCase):
         
         cuentasSofia = self.manager.cuentasPorTitular("Sofia Romero")
         self.assertTrue(Cuenta('a3', TipoCuenta.Caja_de_Ahorro, '100000', '0.05') in cuentasSofia)
-        self.assertTrue(Ceunta('a2', TipoCuenta.Cuenta_Corriente, '4000', '0') in cuentasSofia)
+        self.assertTrue(Cuenta('a2', TipoCuenta.Cuenta_Corriente, '4000', '0') in cuentasSofia)
     
     def test_balance(self):
         balanceUno = self.manager.balance('a1')
