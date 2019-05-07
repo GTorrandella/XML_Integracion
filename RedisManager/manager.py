@@ -16,7 +16,7 @@ class Manager():
     
     def guardarCuenta(self, cuenta):
         mapa = {"balance":cuenta.balance,
-                "tipo":cuenta.tipo,
+                "tipo":cuenta.tipo.name,
                 "interes":cuenta.interes}
         try:
             self._db.hmset("cuenta:"+cuenta.id, mapa)
