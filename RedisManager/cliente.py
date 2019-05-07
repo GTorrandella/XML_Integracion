@@ -10,11 +10,11 @@ class Cliente(object):
     '''
 
 
-    def __init__(self, id, nombre, direccion):
+    def __init__(self, idCliente, nombre, direccion):
         '''
         Constructor
         '''
-        self.id = id
+        self.id = idCliente
         self.nombre = nombre
         self.direccion = direccion
         

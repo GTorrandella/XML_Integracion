@@ -40,16 +40,17 @@ class Manager():
         except redis.exceptions.ConnectionError:
             print("Base de datos offline. Revisar la conexión.")
 
+    def _buscarCuenta(self, idCuenta):
+        tipo, balance, interes = self._db.hmget("cuenta:"+ idCuenta.decode(), "tipo", "balance", "interes")
+        return Cuenta(idCuenta.decode(), TipoCuenta[tipo.decode()], balance.decode(), interes.decode()) 
+
     def listadoDeCuentas(self):
         try:
             lista = []
             for idCuenta in self._db.smembers("cuentas"):
-                aux = {"id":idCuenta.decode()}
-                cuenta = self._db.hgetall("cuenta:"+ idCuenta.decode())
-                for dato in cuenta:
-                    aux[dato.decode()] = cuenta[dato].decode()
                 idTitular = self._db.hget("cuenta-cliente", idCuenta.decode()).decode()
-                aux['t'] = self._db.hget("cliente:"+idTitular, "nombre").decode()
+                aux ={'cuenta':self._buscarCuenta(idCuenta.decode()),
+                      'titular':self._db.hget("cliente:"+idTitular, "nombre").decode()}
                 lista.append(aux)
             return lista
         except redis.exceptions.ConnectionError:
@@ -62,9 +63,7 @@ class Manager():
             idCliente = self._db.hget("clientes", titular)
             if not idCliente == None:
                 for idCuenta in self._db.smembers("cliente-cuenta:"+idCliente.decode()):
-                    tipo, balance, interes = self._db.hmget("cuenta:"+ idCuenta.decode(), "tipo", "balance", "interes")
-                    aux = Cuenta(idCuenta.decode(), TipoCuenta[tipo.decode()], balance.decode(), interes.decode())
-                    lista.append(aux)
+                    lista.append(self._buscarCuenta(idCuenta.decode()))
             return lista
         except redis.exceptions.ConnectionError:
             print("Base de datos offline. Revisar la conexión.")

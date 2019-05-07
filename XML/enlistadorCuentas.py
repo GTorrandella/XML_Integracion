@@ -45,14 +45,15 @@ class Enlistador(object):
     
     def _imprimirCuenta(self, cuenta):
         print(" ---------------------------------------------")
-        idc = self._agregarBlanco(cuenta['id'], 4)
-        nombre = cuenta['t'].split()
-        bal = self._agregarBlanco(cuenta['balance'], 9)
-        tint = self._agregarBlanco(cuenta['interes'], 13)
-        t = self._defTipo(TipoCuenta(cuenta['tipo']))
+        nombreSeparadoEnLineas = cuenta['titular'].split()
+        infoCuenta = cuenta['cuenta']
+        idc = self._agregarBlanco(cuenta.id, 4)
+        balance = self._agregarBlanco(infoCuenta.balance, 9)
+        interes = self._agregarBlanco(infoCuenta.interes, 13)
+        tipo = self._defTipo(infoCuenta.tipo)
         
-        print(' '+idc+'|'+self._agregarBlanco(nombre[0], 9)+'|'+bal+'|'+tint+'|'+t)
+        print(' '+idc+'|'+self._agregarBlanco(nombreSeparadoEnLineas[0], 9)+'|'+balance+'|'+interes+'|'+tipo)
         
-        for i in range(1, len(nombre)):
-            print("     |"+self._agregarBlanco(nombre[i], 9)+"|         |             |     ")
+        for linea in range(1, len(nombreSeparadoEnLineas)):
+            print("     |"+self._agregarBlanco(nombreSeparadoEnLineas[linea], 9)+"|         |             |     ")
         
