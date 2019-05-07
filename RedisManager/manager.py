@@ -3,7 +3,6 @@
 """
 
 import redis
-from RedisManager.cliente import Cliente
 from RedisManager.cuenta import Cuenta, TipoCuenta
 
 class Manager():
@@ -12,7 +11,7 @@ class Manager():
         if contexto == "test":
             self._db = redis.from_url("redis://localhost:6379", db = 1)
         else:
-            self._db = redis.from_url("redis://xmlredis:6379", db = 0)
+            self._db = redis.from_url("redis://integracionRedis:6379", db = 0)
     
     def guardarCuenta(self, cuenta):
         mapa = {"balance":cuenta.balance,
