@@ -38,7 +38,7 @@ Then start the container.
 ```
 docker container run -d --network integracionNet --name integracionRedis redis redis-server --appendonly yes
 ```
-**NOTE** The container name **must** be _xmlredis_. Otherwise, the other half will not find the database.
+**NOTE** The container name **must** be _integracionRedis_. Otherwise, the other half will not find the database.
 
 ### Set Up the command line app
 
