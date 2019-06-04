@@ -20,8 +20,9 @@ class Enlistador(object):
     
     def enlistar(self):
         listado = self.manager.listadoDeCuentas()
-        listado = sorted(listado, key=lambda d: d['id'])
-        self.imprimirListado(listado)
+        if listado != "ERROR":
+            listado = sorted(listado, key=lambda d: d['cuenta'].id)
+            self.imprimirListado(listado)
         
     def imprimirListado(self, listado):
         print("")
@@ -47,7 +48,7 @@ class Enlistador(object):
         print(" ---------------------------------------------")
         nombreSeparadoEnLineas = cuenta['titular'].split()
         infoCuenta = cuenta['cuenta']
-        idc = self._agregarBlanco(cuenta.id, 4)
+        idc = self._agregarBlanco(infoCuenta.id, 4)
         balance = self._agregarBlanco(infoCuenta.balance, 9)
         interes = self._agregarBlanco(infoCuenta.interes, 13)
         tipo = self._defTipo(infoCuenta.tipo)

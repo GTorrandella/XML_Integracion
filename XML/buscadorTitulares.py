@@ -46,10 +46,11 @@ class BuscadorTitulares(object):
         print("---------------------------------------------------------")
         print(self._agregarBlanco(titular+":", 21))
         cuentas = self.manager.cuentasPorTitular(titular)
-        for cuenta in cuentas:
-            aux = self._agregarBlanco("", 21)
-            aux += "|"+self._agregarBlanco(cuenta.id, 4)
-            aux += "|"+self._agregarBlanco(cuenta.balance, 9)
-            aux += "|"+self._agregarBlanco(cuenta.interes, 13)
-            aux += "|"+self._defTipo(cuenta.tipo)
-            print(aux)
+        if cuentas != "ERROR":
+            for cuenta in cuentas:
+                aux = self._agregarBlanco("", 21)
+                aux += "|"+self._agregarBlanco(cuenta.id, 4)
+                aux += "|"+self._agregarBlanco(cuenta.balance, 9)
+                aux += "|"+self._agregarBlanco(cuenta.interes, 13)
+                aux += "|"+self._defTipo(cuenta.tipo)
+                print(aux)

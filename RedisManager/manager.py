@@ -3,7 +3,10 @@
 """
 
 import redis
+import logging
 from RedisManager.cuenta import Cuenta, TipoCuenta
+
+logging.basicConfig(level=logging.DEBUG)
 
 class Manager():
     
@@ -11,7 +14,7 @@ class Manager():
         if contexto == "test":
             self._db = redis.from_url("redis://localhost:6379", db = 1)
         else:
-            self._db = redis.from_url("redis://integracionRedis:6379", db = 0)
+            self._db = redis.from_url("redis://redis:6379", db = 0)
     
     def guardarCuenta(self, cuenta):
         mapa = {"balance":cuenta.balance,
@@ -21,6 +24,7 @@ class Manager():
             self._db.hmset("cuenta:"+cuenta.id, mapa)
             self._db.sadd("cuentas", cuenta.id)
         except redis.exceptions.ConnectionError:
+            logging.debug(redis.exceptions.ConnectionError)
             print("Base de datos offline. Revisar la conexión.")
     
     def guardarCliente(self, cliente):
@@ -30,6 +34,7 @@ class Manager():
             self._db.hmset("cliente:"+cliente.id, mapa)
             self._db.hset("clientes", cliente.nombre, cliente.id)
         except redis.exceptions.ConnectionError:
+            logging.debug(redis.exceptions.ConnectionError)
             print("Base de datos offline. Revisar la conexión.")        
         
     def guardarRelacion(self, idCliente, idCuenta):
@@ -37,6 +42,7 @@ class Manager():
             self._db.hset("cuenta-cliente", idCuenta, idCliente)
             self._db.sadd("cliente-cuenta:"+idCliente, idCuenta)
         except redis.exceptions.ConnectionError:
+            logging.debug(redis.exceptions.ConnectionError)
             print("Base de datos offline. Revisar la conexión.")
 
     def _buscarCuenta(self, idCuenta):
@@ -53,6 +59,7 @@ class Manager():
                 lista.append(aux)
             return lista
         except redis.exceptions.ConnectionError:
+            logging.debug(redis.exceptions.ConnectionError)
             print("Base de datos offline. Revisar la conexión.")
             return "ERROR"
     
@@ -65,6 +72,7 @@ class Manager():
                     lista.append(self._buscarCuenta(idCuenta.decode()))
             return lista
         except redis.exceptions.ConnectionError:
+            logging.debug(redis.exceptions.ConnectionError)
             print("Base de datos offline. Revisar la conexión.")
             return "ERROR"
     
@@ -74,6 +82,7 @@ class Manager():
             if not bal == None:
                 return bal.decode()
         except redis.exceptions.ConnectionError:
+            logging.debug(redis.exceptions.ConnectionError)
             print("Base de datos offline. Revisar la conexión.")
             return "ERROR"
         

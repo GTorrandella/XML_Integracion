@@ -21,7 +21,8 @@ class BuscadorBalance(object):
         for idCuenta in userInput.split():
             print("------------------")
             bal = self.manager.balance(idCuenta)
-            print(self._agregarBlanco(idCuenta, 4)+"|"+self._agregarBlanco(bal, 14))
+            if bal != "ERROR":
+                print(self._agregarBlanco(idCuenta, 4)+"|"+self._agregarBlanco(bal, 14))
         print("==================")
         
     def _agregarBlanco(self, palabra, longitud):
