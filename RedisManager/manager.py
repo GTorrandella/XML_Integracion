@@ -84,7 +84,7 @@ class Manager():
             lista = []
             idCliente = self._db.hget(self._NAME_SET_CLIENTES, titular)
             if not idCliente == None:
-                for idCuenta in self._db.smembers(self._crearNombreHMCliente(idCliente.decode())):
+                for idCuenta in self._db.smembers(self._crearNombreSetClienteCuenta(idCliente.decode())):
                     lista.append(self._buscarCuenta(idCuenta.decode()))
             return lista
         except redis.exceptions.ConnectionError:
